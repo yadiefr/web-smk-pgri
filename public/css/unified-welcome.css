@@ -1,0 +1,2137 @@
+/* Unified Welcome CSS - Menggabungkan Modern Welcome + Mobile Fix */
+/* File ini menggabungkan modern-welcome.css dan mobile-fix.css dengan resolusi konflik */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+/* ==================== RESET AND BASE STYLES ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.6;
+    color: #ffffff;
+    background: #0a0e27;
+    overflow-x: hidden;
+}
+
+/* ==================== CSS CUSTOM PROPERTIES ==================== */
+:root {
+    --neon-blue: #00d4ff;
+    --vibrant-purple: #7c3aed;
+    --electric-pink: #ec4899;
+    --dark-bg: #0a0e27;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --border-glass: rgba(255, 255, 255, 0.1);
+}
+
+/* ==================== BACKGROUND PATTERNS ==================== */
+.pattern-bg {
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+    background-color: var(--dark-bg);
+}
+
+/* ==================== TYPOGRAPHY ==================== */
+.bebas {
+    font-family: 'Bebas Neue', cursive !important;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--neon-blue) 0%, var(--electric-pink) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ==================== GLASSMORPHISM EFFECTS ==================== */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-glass);
+}
+
+.glass-nav {
+    background: rgba(10, 14, 39, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+/* ==================== NEON EFFECTS ==================== */
+.neon-glow {
+    text-shadow: 
+        0 0 10px var(--neon-blue),
+        0 0 20px var(--neon-blue),
+        0 0 30px var(--neon-blue);
+}
+
+.neon-border {
+    box-shadow: 
+        0 0 20px rgba(0, 212, 255, 0.5),
+        inset 0 0 20px rgba(0, 212, 255, 0.1);
+    border: 1px solid var(--neon-blue);
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px); 
+    }
+    50% { 
+        transform: translateY(-20px); 
+    }
+}
+
+.floating {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes morph {
+    0%, 100% {
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    }
+    50% {
+        border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+    }
+}
+
+.morphing-shape {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(45deg, var(--neon-blue), var(--electric-pink));
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    animation: morph 8s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(0, 212, 255, 0.8);
+    }
+}
+
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* ==================== 3D CARD EFFECTS ==================== */
+/* Animation disabled for static appearance */
+
+/* ==================== ANIMATED BACKGROUND ==================== */
+.animated-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.animated-bg li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 212, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+}
+
+.animated-bg li:nth-child(1) {
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.animated-bg li:nth-child(2) {
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.animated-bg li:nth-child(3) {
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.animated-bg li:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.animated-bg li:nth-child(5) {
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+    animation-duration: 14s;
+}
+
+.animated-bg li:nth-child(6) {
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.animated-bg li:nth-child(7) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.animated-bg li:nth-child(8) {
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.animated-bg li:nth-child(9) {
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.animated-bg li:nth-child(10) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+/* ==================== BUTTON STYLES ==================== */
+.btn-futuristic {
+    background: linear-gradient(135deg, var(--neon-blue), var(--vibrant-purple));
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-futuristic:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+}
+
+.btn-futuristic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-futuristic:hover::before {
+    left: 100%;
+}
+
+/* ==================== NAVIGATION STYLES ==================== */
+.nav-link {
+    position: relative;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--neon-blue);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-blue), var(--electric-pink));
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ==================== RESPONSIVE CONTAINER SYSTEM ==================== */
+
+/* Desktop containers */
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+/* ==================== UNIFIED GRID SYSTEM ==================== */
+
+/* Desktop Grid Layout */
+.lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid {
+    display: grid;
+}
+
+/* ==================== QUICK INFO / HUBUNGI KAMI SECTION ==================== */
+.quick-info {
+    position: relative;
+}
+
+.info-card-modern {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-card-modern .glass {
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Desktop: Ensure equal heights for all cards */
+@media (min-width: 1024px) {
+    #hubungi-kami-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        grid-template-rows: 1fr !important;
+        align-items: stretch !important;
+        gap: 1.5rem !important;
+        width: 100% !important;
+    }
+    
+    #hubungi-kami-grid .info-card-modern {
+        height: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    #hubungi-kami-grid .info-card-modern .glass {
+        height: 100% !important;
+        min-height: 280px !important;
+        max-height: 280px !important;
+        padding: 1.5rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+}
+
+.info-card-modern:hover .glass {
+    transform: rotateY(2deg) rotateX(-2deg) translateZ(10px) scale(1.02);
+    box-shadow: 
+        0 25px 50px rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.info-icon-modern {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.location-link-modern {
+    background: rgba(255, 215, 0, 0.2);
+    color: #ffd700;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.location-link-modern:hover {
+    background: #ffd700;
+    color: #333;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.register-btn-modern {
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    color: #333;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.register-btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+    color: #333;
+    text-decoration: none;
+}
+
+/* ==================== DESKTOP LAYOUT ==================== */
+@media (min-width: 1024px) {
+    /* Desktop Quick Info Cards - Icon and text styles */
+    .quick-info .info-icon-modern {
+        width: 60px !important;
+        height: 60px !important;
+        margin: 0 auto 1rem auto !important;
+        flex-shrink: 0;
+    }
+    
+    .quick-info .info-icon-modern i {
+        font-size: 2.5rem !important;
+    }
+    
+    .quick-info h4 {
+        font-size: 1.125rem !important;
+        margin-bottom: 1rem !important;
+        flex-shrink: 0;
+        text-align: center;
+    }
+    
+    /* Buttons positioned at bottom */
+    .quick-info .location-link-modern,
+    .quick-info .register-btn-modern {
+        margin-top: auto;
+        flex-shrink: 0;
+        width: auto;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ==================== TABLET LAYOUT ==================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .lg\:grid-cols-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 1.5rem !important;
+    }
+    
+    .quick-info .glass {
+        height: 240px !important;
+        min-height: 240px !important;
+    }
+    
+    .quick-info .info-icon-modern {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .quick-info .info-icon-modern i {
+        font-size: 2rem !important;
+    }
+}
+
+/* ==================== MOBILE LAYOUT ==================== */
+@media (max-width: 767px) {
+    /* Reset all body and html padding */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Mobile Container System */
+    .container,
+    .container.mx-auto,
+    nav .container,
+    section .container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    
+    /* Mobile Grid System - Hubungi Kami 2x2 Layout */
+    /* Mobile Quick Info Cards */
+    @media (max-width: 1023px) {
+        .lg\:grid-cols-4,
+        #hubungi-kami-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            grid-template-rows: repeat(2, auto) !important;
+            gap: 0.75rem !important;
+            width: 100% !important;
+        }
+        
+        .quick-info .info-card-modern {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        .quick-info .glass {
+            padding: 0.75rem !important;
+            height: 100% !important;
+            min-height: 160px !important;
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            text-align: center !important;
+        }
+        
+        .quick-info .info-icon-modern {
+            width: 40px !important;
+            height: 40px !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        .quick-info .info-icon-modern i {
+            font-size: 1.5rem !important;
+        }
+        
+        .quick-info h4 {
+            font-size: 0.875rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        .quick-info .text-xs,
+        .quick-info .text-sm {
+            font-size: 0.75rem !important;
+            line-height: 1.2 !important;
+        }
+    }
+    
+    /* Other Mobile Grid Layouts */
+    .md\:grid-cols-3,
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+    }
+    
+    /* Special handling for 3-column grids */
+    .md\:grid-cols-3 > div:nth-child(3) {
+        grid-column: 1 / -1 !important;
+        max-width: 100% !important;
+    }
+    
+    /* About section - 3 columns in 1 row - Desktop only */
+    @media (min-width: 768px) {
+        #about .grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 1.5rem !important;
+        }
+        
+        #about .grid > div {
+            grid-column: auto !important;
+        }
+        
+        #about .glass {
+            padding: 1.5rem !important;
+        }
+    }
+    
+    /* Mobile Section Spacing */
+    section {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+    
+    .py-20 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+    
+    .py-16 {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+    
+    /* Mobile Typography */
+    .bebas.text-7xl,
+    .bebas.text-8xl {
+        font-size: 2.5rem !important;
+        line-height: 1.1 !important;
+    }
+    
+    .bebas.text-5xl,
+    .bebas.text-6xl {
+        font-size: 1.875rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    .text-5xl, .text-6xl {
+        font-size: 2.25rem !important;
+    }
+    
+    .text-7xl, .text-8xl {
+        font-size: 3rem !important;
+    }
+    
+    /* Mobile Spacing Utilities */
+    .mb-16 {
+        margin-bottom: 1rem !important;
+    }
+    
+    .mb-12 {
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .mb-6 {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .mb-4 {
+        margin-bottom: 0.25rem !important;
+    }
+    
+    /* Mobile Cards */
+    .glass,
+    .card-3d,
+    .glass.card-3d {
+        margin-left: 4px !important;
+        margin-right: 4px !important;
+        width: calc(100% - 8px) !important;
+        padding: 0.75rem !important;
+    }
+    
+    .glass.card-3d h4 {
+        font-size: 0.875rem !important;
+        margin-bottom: 0.5rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    .glass.card-3d p {
+        font-size: 0.75rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    /* Mobile Icon Containers */
+    .h-32 {
+        height: 2.5rem !important;
+    }
+    
+    .h-32 i {
+        font-size: 1.25rem !important;
+    }
+    
+    /* Mobile Cards hover effects disabled */
+    /* All hover animations disabled */
+    
+    /* Reduce animated background on mobile for performance */
+    .animated-bg li {
+        opacity: 0.5;
+    }
+    
+    .animated-bg li:nth-child(n+6) {
+        display: none;
+    }
+}
+
+/* ==================== FILTER BUTTONS ==================== */
+.news-filter-btn-modern {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.6), rgba(236, 72, 153, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-filter-btn-modern {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.6), rgba(59, 130, 246, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.news-filter-btn-modern::before,
+.gallery-filter-btn-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.news-filter-btn-modern:hover::before,
+.gallery-filter-btn-modern:hover::before {
+    left: 100%;
+}
+
+.news-filter-btn-modern:hover,
+.news-filter-btn-modern.active {
+    background: linear-gradient(135deg, var(--vibrant-purple), var(--electric-pink));
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.gallery-filter-btn-modern:hover,
+.gallery-filter-btn-modern.active {
+    background: linear-gradient(135deg, var(--neon-blue), #3b82f6);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 212, 255, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* Mobile Filter Buttons */
+@media (max-width: 768px) {
+    .flex.flex-wrap.justify-center.gap-4.mb-12 {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-around !important;
+        gap: 0.5rem !important;
+        overflow-x: auto !important;
+        padding: 0 0.5rem !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    .news-filter-btn-modern,
+    .gallery-filter-btn-modern {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.75rem !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        border-radius: 20px !important;
+        min-width: fit-content !important;
+    }
+}
+
+/* ==================== NEWS & GALLERY SECTIONS ==================== */
+.news, .gallery {
+    position: relative;
+    overflow: hidden;
+}
+
+.news-card-modern, .gallery-item-modern {
+    height: 100%;
+}
+
+.news-image-container, .gallery-image-container {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.news-image-modern, .gallery-image-modern {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.news-card-modern:hover .news-image-modern,
+.gallery-item-modern:hover .gallery-image-modern {
+    transform: scale(1.1);
+}
+
+/* ==================== COLOR UTILITIES ==================== */
+.text-neon-blue {
+    color: var(--neon-blue);
+}
+
+.text-electric-pink {
+    color: var(--electric-pink);
+}
+
+.text-vibrant-purple {
+    color: var(--vibrant-purple) !important;
+}
+
+.text-yellow-400 {
+    color: #fbbf24;
+}
+
+.text-green-400 {
+    color: #34d399;
+}
+
+.text-red-400 {
+    color: #f87171;
+}
+
+.text-cyan-400 {
+    color: #22d3ee;
+}
+
+/* ==================== UTILITY CLASSES ==================== */
+.py-20 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.mb-16 {
+    margin-bottom: 4rem;
+}
+
+.mb-6 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mr-2 {
+    margin-right: 0.5rem;
+}
+
+.p-6 {
+    padding: 1.5rem;
+}
+
+.h-32 {
+    height: 8rem;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+}
+
+.text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.tracking-widest {
+    letter-spacing: 0.1em;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.max-w-2xl {
+    max-width: 42rem;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gap-8 {
+    gap: 2rem;
+}
+
+.col-span-1 {
+    grid-column: span 1 / span 1;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.5rem;
+}
+
+.leading-relaxed {
+    line-height: 1.625;
+}
+
+.rounded-xl {
+    border-radius: 0.75rem;
+}
+
+.transition-all {
+    transition-property: all;
+}
+
+.duration-500 {
+    transition-duration: 500ms;
+}
+
+.text-white\/80 {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.text-white\/70 {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to));
+}
+
+.inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.relative {
+    position: relative;
+}
+
+.z-10 {
+    z-index: 10;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+/* ==================== NAVIGATION MOBILE SPECIFIC ==================== */
+@media (max-width: 768px) {
+    nav {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    
+    nav .bebas {
+        font-size: 1.125rem !important;
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
+    }
+    
+    #mobile-menu-btn {
+        min-width: 48px !important;
+        min-height: 48px !important;
+        padding: 0.75rem !important;
+        cursor: pointer !important;
+        background-color: rgba(6, 182, 212, 0.1) !important;
+        border: 2px solid rgba(6, 182, 212, 0.5) !important;
+        border-radius: 0.5rem !important;
+    }
+    
+    #mobile-menu-btn:hover {
+        background-color: rgba(6, 182, 212, 0.2) !important;
+        border-color: rgba(6, 182, 212, 0.8) !important;
+    }
+}
+
+/* ==================== HERO SECTION MOBILE ==================== */
+@media (max-width: 768px) {
+    #home {
+        min-height: 80vh !important;
+    }
+    
+    #home .grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+        align-items: center !important;
+    }
+    
+    #home .order-1 {
+        order: 1 !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+    
+    #home .order-2 {
+        order: 2 !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+}
+
+/* ==================== WHATSAPP BUTTON ==================== */
+.whatsapp-float {
+    right: 8px !important;
+    width: 48px !important;
+    height: 48px !important;
+    bottom: 20px !important;
+}
+
+/* ==================== FOOTER STYLES ==================== */
+.footer-modern {
+    background: var(--dark-bg);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-glow-effect {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-blue), var(--electric-pink), transparent);
+    opacity: 0.6;
+}
+
+.heart {
+    color: #ff6b6b;
+    animation: heartbeat 2s infinite;
+}
+
+/* ==================== ADDITIONAL RESPONSIVE OVERRIDES ==================== */
+@media (max-width: 480px) {
+    .container {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    
+    section {
+        padding-left: 0.25rem !important;
+        padding-right: 0.25rem !important;
+    }
+    
+    .glass {
+        padding: 1rem !important;
+    }
+    
+    .text-center h2 {
+        font-size: 2rem !important;
+        padding: 0 0.25rem;
+    }
+}
+
+/* ==================== FINAL OVERRIDES ==================== */
+/* Ensure desktop layout always works correctly */
+@media (min-width: 1024px) {
+    body section.quick-info div#hubungi-kami-grid.grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 1.5rem !important;
+    }
+    
+    body .quick-info .grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+}
+
+/* Ensure mobile layout works correctly */
+@media (max-width: 1023px) {
+    body section.quick-info div#hubungi-kami-grid.grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+    }
+}
+
+/* ==================== INTERNAL CSS MOVED FROM BLADE TEMPLATE ==================== */
+/* Mobile padding and layout fixes */
+@media screen and (max-width: 768px) {
+    * {
+        box-sizing: border-box !important;
+    }
+    
+    body {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin: 0 !important;
+        overflow-x: hidden !important;
+    }
+    
+    nav, section {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    
+    .mobile-consistent-padding {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* Mobile grid layouts for better space usage */
+    section .grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.75rem !important;
+    }
+    
+    /* For 3-item grids, make 3rd item span full width */
+    .grid > div:nth-child(3):last-child {
+        grid-column: 1 / -1 !important;
+    }
+    
+    /* About section mobile layout - Single column for better readability */
+    #about .grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    
+    #about .grid > div {
+        width: 100% !important;
+        grid-column: unset !important;
+    }
+    
+    #about .glass {
+        padding: 1.25rem !important;
+        border-radius: 12px !important;
+        min-height: auto !important;
+    }
+    
+    #about .glass h4 {
+        font-size: 1.125rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 0.75rem !important;
+        font-weight: 700 !important;
+    }
+    
+    #about .glass p {
+        font-size: 0.875rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 1rem !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    #about .glass ul {
+        font-size: 0.8rem !important;
+    }
+    
+    #about .glass ul li {
+        margin-bottom: 0.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    #about .glass ul li i {
+        margin-right: 0.5rem !important;
+        font-size: 0.75rem !important;
+        flex-shrink: 0 !important;
+    }
+    
+    #about .h-32 {
+        height: 4rem !important;
+        margin-bottom: 1rem !important;
+        border-radius: 8px !important;
+    }
+    
+    #about .h-32 i {
+        font-size: 2rem !important;
+    }
+    
+    /* About section title adjustments for mobile */
+    #about .bebas.text-5xl,
+    #about .bebas.text-6xl {
+        font-size: 2rem !important;
+        line-height: 1.1 !important;
+        text-align: center !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    #about .text-electric-pink {
+        font-size: 0.75rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    #about .text-white\/80 {
+        font-size: 1rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 2rem !important;
+        padding: 0 1rem !important;
+    }
+    
+    /* About section spacing */
+    #about.py-20 {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+    
+    #about .mb-16 {
+        margin-bottom: 2rem !important;
+    }
+    
+    /* Compact sections */
+    section.py-20 {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+    
+    .mb-16 {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .mb-12 {
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Compact text */
+    h2.bebas {
+        font-size: 1.5rem !important;
+        line-height: 1.1 !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    h1.bebas {
+        font-size: 2rem !important;
+        line-height: 1 !important;
+    }
+    
+    h4 {
+        font-size: 0.875rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    p {
+        font-size: 0.75rem !important;
+        line-height: 1.3 !important;
+    }
+    
+    /* Smaller icons in cards */
+    .glass .h-32,
+    .card-3d .h-32 {
+        height: 2.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .glass .h-32 i,
+    .card-3d .h-32 i {
+        font-size: 1.25rem !important;
+    }
+    
+    /* Navigation text smaller */
+    nav .bebas {
+        font-size: 1rem !important;
+    }
+    
+    /* Button text smaller */
+    .group.relative {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.75rem !important;
+    }
+    
+    /* Images and logos smaller */
+    .w-10.h-10 {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+    
+    nav .bebas {
+        font-size: 1rem !important;
+        display: block !important;
+    }
+    
+    /* Gallery and news images more compact */
+    .news-image-modern,
+    .gallery-image-modern {
+        height: 6rem !important;
+        object-fit: cover !important;
+    }
+    
+    /* Info cards icons smaller */
+    .info-icon-modern i {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Social icons smaller */
+    .social-link-modern {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+        font-size: 0.75rem !important;
+    }
+    
+    /* Hero section mobile centering - fixed height */
+    #home {
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding-top: 6rem !important;
+        padding-bottom: 4rem !important;
+    }
+    
+    #home > div {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    
+    /* Hero content positioning - optimize for single screen */
+    #home .space-y-6,
+    #home .space-y-4 {
+        transform: translateY(0) !important;
+        margin-top: 0 !important;
+        max-height: 80vh !important;
+        overflow: hidden !important;
+    }
+    
+    /* Make hero text smaller on mobile to fit */
+    #home .bebas.text-7xl {
+        font-size: 2.5rem !important;
+        line-height: 1.1 !important;
+        font-weight: 900 !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+    }
+    
+    #home .text-cyan-400.bebas.text-6xl {
+        font-size: 1.8rem !important;
+        line-height: 1.1 !important;
+        font-weight: 900 !important;
+    }
+    
+    /* Hero title and address spacing */
+    #home .space-y-4 > div {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    #home .space-y-4 > p {
+        margin-top: 1rem !important;
+    }
+    
+    /* News and gallery grid - 2 columns instead of 1 */
+    .grid.md\\:grid-cols-2,
+    .grid.lg\\:grid-cols-3:not(#about .grid),
+    .grid.lg\\:grid-cols-4 {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.5rem !important;
+    }
+    
+    /* Mobile hero layout fixes */
+    #home .mobile-hero-stack {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+        align-items: center !important;
+        grid-template-columns: none !important;
+        width: 100% !important;
+    }
+    
+    #home .relative.order-1.md\\:order-2 {
+        order: 1 !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    #home .space-y-4.order-2.md\\:order-1 {
+        order: 2 !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+    
+    /* Override any grid properties */
+    #home .grid.md\\:grid-cols-2 {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: none !important;
+    }
+}
+
+/* Desktop Hero Section - Reset mobile overrides */
+@media (min-width: 769px) {
+    /* Desktop navigation improvements */
+    nav.fixed {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+        height: auto !important;
+        min-height: 70px !important;
+    }
+    
+    nav .hidden.md\:flex {
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    /* Hero section adjustments */
+    #home {
+        min-height: 100vh !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        padding-top: 100px !important;
+        padding-bottom: 80px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    #home > div {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    
+    #home .space-y-6 {
+        transform: none !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Desktop hero font improvements */
+    #home .bebas {
+        font-weight: 900 !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+    }
+    
+    #home .gradient-text {
+        font-weight: 900 !important;
+    }
+    
+    /* Ensure scroll indicator stays at bottom on desktop */
+    #home .scroll-indicator {
+        position: absolute !important;
+        bottom: 3rem !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        width: auto !important;
+        margin: 0 !important;
+    }
+    
+    /* Quick Info Section - Force 2x2 grid on mobile */
+    .quick-info .grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-rows: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .quick-info .glass,
+    .quick-info .bg-white {
+        padding: 1rem !important;
+        height: 150px !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+    
+    /* Make sure the info cards are correctly sized for mobile */
+    .quick-info .info-card-modern {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .quick-info .text-lg {
+        font-size: 0.875rem !important;
+        line-height: 1.25rem !important;
+    }
+    
+    .quick-info .text-sm {
+        font-size: 0.75rem !important;
+        line-height: 1rem !important;
+    }
+    
+    .quick-info .w-12 {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+    
+    /* Specific targeting for quick info grid */
+    section.quick-info .grid.grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0.75rem !important;
+        width: 100% !important;
+    }
+    
+    /* Force equal dimensions on all quick info cards */
+    section.quick-info .bg-white,
+    section.quick-info .glass,
+    section.quick-info .card-3d {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 150px !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        flex: 1 !important;
+        padding: 0.75rem !important;
+        overflow: hidden !important;
+    }
+    
+    /* Improve mobile layout for Hubungi Kami section */
+    @media (max-width: 1023px) {
+        section.quick-info #hubungi-kami-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            grid-template-rows: repeat(2, auto) !important;
+            gap: 0.75rem !important;
+            width: 100% !important;
+        }
+        
+        section.quick-info .info-card-modern {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    }
+    
+    /* Make text and icons more compact on mobile */
+    @media (max-width: 767px) {
+        section.quick-info .info-icon-modern {
+            width: 40px !important;
+            height: 40px !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        section.quick-info .info-icon-modern i {
+            font-size: 1.25rem !important;
+        }
+        
+        section.quick-info h4 {
+            font-size: 0.9rem !important;
+            margin-bottom: 0.25rem !important;
+        }
+        
+        section.quick-info .text-xs, 
+        section.quick-info .text-sm {
+            font-size: 0.7rem !important;
+            line-height: 1.2 !important;
+        }
+    }
+    
+    /* Desktop adjustments - Fix positioning - Override external CSS */
+    section#home .mobile-consistent-padding {
+        justify-content: center !important;
+        padding-top: 3rem !important;
+        flex-direction: column !important;
+    }
+    
+    section#home .mobile-consistent-padding .flex {
+        align-items: center !important;
+        flex-direction: row !important;
+    }
+}
+
+/* Additional Quick Info Overrides - Backup untuk memastikan desktop layout berfungsi */
+@media (min-width: 1024px) {
+    /* Backup CSS untuk memastikan desktop grid tetap 4 kolom */
+    body section.quick-info div#hubungi-kami-grid.grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 1.5rem !important;
+    }
+}
+
+/* Hero Section Balanced Spacing */
+#home {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    padding-top: 80px !important;
+    padding-bottom: 80px !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 768px) {
+    #home {
+        padding-top: 60px !important;
+        padding-bottom: 60px !important;
+        min-height: 100vh !important;
+    }
+    
+    #home .mobile-consistent-padding {
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Center button text on mobile */
+    #home .flex.flex-wrap.gap-4.justify-center,
+    #home .flex.flex-wrap.gap-2 {
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    #home .group.relative {
+        text-align: center !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: auto !important;
+        min-width: 140px !important;
+    }
+    
+    #home .group.relative .relative.z-10.flex.items-center {
+        justify-content: center !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    /* Stack buttons vertically on mobile */
+    #home .flex.flex-wrap.gap-4.justify-center {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+    
+    #home .flex.flex-wrap.gap-2 {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+    
+    /* Ensure button text is perfectly centered */
+    #home a.group.relative,
+    #home button.group.relative {
+        width: 200px !important;
+        margin: 0 auto !important;
+    }
+    
+    #home .group span.relative.z-10 {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    
+    /* Prevent hero section scrolling on mobile - Override external CSS */
+    section#home {
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+        position: relative !important;
+    }
+    
+    section#home .bebas {
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    section#home .mobile-consistent-padding {
+        max-height: none !important;
+        overflow: visible !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        min-height: calc(100vh - 160px) !important;
+        padding-top: 4rem !important;
+    }
+    
+    section#home .mobile-consistent-padding .flex {
+        align-items: flex-start !important;
+        justify-content: center !important;
+        width: 100% !important;
+        flex-direction: column !important;
+    }
+    
+    section#home .grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        align-items: stretch !important;
+    }
+    
+    section#home .order-1,
+    section#home .order-2 {
+        order: unset !important;
+        width: 100% !important;
+        display: block !important;
+    }
+    
+    /* Force content to stack naturally on mobile */
+    section#home .space-y-4,
+    section#home .space-y-6 {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+    }
+    
+    /* Desktop scroll indicator positioning */
+    #home .scroll-indicator {
+        bottom: 60px !important;
+    }
+    
+    /* Force 2x2 grid for Hubungi Kami section on mobile only */
+    @media (max-width: 1023px) {
+        #hubungi-kami-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            grid-template-rows: repeat(2, auto) !important;
+            gap: 0.75rem !important;
+            width: 100% !important;
+        }
+        
+        #hubungi-kami-grid .info-card-modern {
+            width: 100% !important;
+            display: block !important;
+        }
+        
+        #hubungi-kami-grid .glass {
+            padding: 0.75rem !important;
+            height: 100% !important;
+            min-height: 186px !important;
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+    }
+    
+    /* Override any other styles that might be causing issues */
+    .quick-info .grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-auto-flow: row !important;
+        grid-auto-rows: auto !important;
+    }
+    
+    .quick-info .grid > * {
+        min-width: 0 !important;
+    }
+}
+
+/* Hero title bold styling classes */
+.hero-title-bold {
+    margin-bottom: 0.5rem !important;
+    font-weight: 900 !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+}
+
+.hero-school-name {
+    margin-top: 0.25rem !important;
+    display: inline-block !important;
+    font-weight: 900 !important;
+}
+
+.hero-description {
+    margin-top: 1rem !important;
+}
+
+/* ==================== PROGRAM KEAHLIAN SECTION ==================== */
+
+/* Program Cards Layout */
+.programs {
+    position: relative;
+}
+
+.program-card-modern {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.program-card-modern .glass {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Program Image Container */
+.program-image-container {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, var(--vibrant-purple), var(--neon-blue));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.program-image-modern {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.program-icon-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.8), rgba(0, 212, 255, 0.8));
+}
+
+.program-icon-fallback i {
+    opacity: 0.9;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Program Overlay */
+.program-overlay {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.program-code {
+    color: var(--neon-blue);
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+}
+
+/* Program Content */
+.program-content-modern {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem !important;
+}
+
+.program-title-modern {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.75rem !important;
+    color: white !important;
+    line-height: 1.3 !important;
+    min-height: 3.25rem;
+    display: flex;
+    align-items: center;
+}
+
+.program-description-modern {
+    color: rgba(255, 255, 255, 0.8) !important;
+    line-height: 1.6 !important;
+    margin-bottom: 1.5rem !important;
+    flex: 1;
+    min-height: 4rem;
+    font-size: 0.9rem;
+}
+
+/* Program Link/Button */
+.program-link-modern {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-top: auto;
+}
+
+.program-link-modern:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.program-link-modern i {
+    font-size: 0.75rem;
+}
+
+/* ==================== RESPONSIVE DESIGN FOR PROGRAM SECTION ==================== */
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+    .programs .grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 2rem !important;
+        align-items: stretch !important;
+    }
+    
+    .program-card-modern .glass {
+        min-height: 420px !important;
+        max-height: 420px !important;
+    }
+    
+    .program-image-container {
+        height: 180px;
+    }
+    
+    .program-content-modern {
+        padding: 2rem !important;
+        height: 240px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+    
+    .program-title-modern {
+        font-size: 1.375rem !important;
+        min-height: 2.75rem !important;
+    }
+    
+    .program-description-modern {
+        font-size: 1rem !important;
+        min-height: 5rem !important;
+    }
+}
+
+/* Tablet Layout */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .programs .grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1.5rem !important;
+        align-items: stretch !important;
+    }
+    
+    .program-card-modern .glass {
+        min-height: 380px !important;
+        max-height: 380px !important;
+    }
+    
+    .program-image-container {
+        height: 160px;
+    }
+    
+    .program-content-modern {
+        height: 220px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+}
+
+/* Mobile Layout */
+@media (max-width: 767px) {
+    .programs .grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    
+    .program-card-modern {
+        width: 100% !important;
+        margin-bottom: 0 !important;
+    }
+    
+    .program-card-modern .glass {
+        min-height: 320px !important;
+        border-radius: 12px;
+    }
+    
+    .program-image-container {
+        height: 140px;
+    }
+    
+    .program-content-modern {
+        padding: 1.25rem !important;
+        height: 180px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+    
+    .program-title-modern {
+        font-size: 1.125rem !important;
+        min-height: 2.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .program-description-modern {
+        font-size: 0.875rem !important;
+        min-height: 3.5rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .program-link-modern {
+        font-size: 0.8rem !important;
+        padding: 10px 14px !important;
+    }
+    
+    .program-overlay {
+        top: 12px;
+        right: 12px;
+        padding: 6px 12px;
+    }
+    
+    .program-code {
+        font-size: 0.75rem;
+    }
+}
