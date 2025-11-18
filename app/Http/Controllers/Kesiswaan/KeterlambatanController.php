@@ -306,6 +306,7 @@ class KeterlambatanController extends Controller
         }
 
         $kelas = Kelas::with('jurusan')->orderBy('nama_kelas')->get();
+        $siswaList = Siswa::with('kelas')->orderBy('nama_lengkap')->get();
         
         // Data batch untuk form
         $batchData = [
@@ -319,7 +320,7 @@ class KeterlambatanController extends Controller
             'status_umum' => $keterlambatanBatch->first()->status,
         ];
 
-        return view('kesiswaan.keterlambatan.edit_batch', compact('keterlambatanBatch', 'kelas', 'batchData'));
+        return view('kesiswaan.keterlambatan.edit_batch', compact('keterlambatanBatch', 'kelas', 'batchData', 'siswaList'));
     }
 
     public function updateBatch(Request $request, $tanggal, $petugas_id, $created_at)
@@ -329,22 +330,28 @@ class KeterlambatanController extends Controller
             'status_batch' => 'required|in:belum_ditindak,sudah_ditindak,selesai',
             'catatan_batch' => 'nullable|string|max:1000',
             'sanksi_batch' => 'nullable|string|max:1000',
-            'siswa' => 'required|array',
+            'siswa' => 'nullable|array',
             'siswa.*.jam_terlambat' => 'required|date_format:H:i',
             'siswa.*.alasan_terlambat' => 'required|string|max:500',
             'siswa.*.status' => 'required|in:belum_ditindak,sudah_ditindak,selesai',
             'siswa.*.sanksi' => 'nullable|string|max:500',
+            'new_siswa' => 'nullable|array',
+            'new_siswa.*.siswa_id' => 'required|exists:siswa,id',
+            'new_siswa.*.jam_terlambat' => 'required|date_format:H:i',
+            'new_siswa.*.alasan_terlambat' => 'required|string|max:500',
+            'new_siswa.*.status' => 'required|in:belum_ditindak,sudah_ditindak,selesai',
+            'new_siswa.*.sanksi' => 'nullable|string|max:500',
         ]);
 
         // Decode timestamp dari URL
         $created_at = \Carbon\Carbon::parse($created_at);
-        $tanggal = \Carbon\Carbon::parse($tanggal)->format('Y-m-d');
+        $tanggal_formatted = \Carbon\Carbon::parse($tanggal)->format('Y-m-d');
         
         // Handle null petugas_id
         $petugas_id = $petugas_id === 'null' ? null : $petugas_id;
         
         // Ambil semua record keterlambatan dalam batch yang sama
-        $query = SiswaKeterlambatan::where('tanggal', $tanggal)
+        $query = SiswaKeterlambatan::where('tanggal', $tanggal_formatted)
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, created_at, ?)) <= 5', [$created_at]);
             
         if ($petugas_id) {
@@ -360,19 +367,65 @@ class KeterlambatanController extends Controller
                 ->with('error', 'Batch keterlambatan tidak ditemukan');
         }
 
-        // Update data batch
-        foreach ($keterlambatanBatch as $keterlambatan) {
-            $siswaData = $request->siswa[$keterlambatan->id] ?? null;
+        // Get current user as petugas
+        $currentPetugas = auth()->user();
+        
+        // Update existing siswa in batch
+        $updatedIds = [];
+        if ($request->has('siswa')) {
+            foreach ($keterlambatanBatch as $keterlambatan) {
+                $siswaData = $request->siswa[$keterlambatan->id] ?? null;
+                
+                if ($siswaData) {
+                    $keterlambatan->update([
+                        'tanggal' => $request->tanggal,
+                        'jam_terlambat' => $siswaData['jam_terlambat'],
+                        'alasan_terlambat' => $siswaData['alasan_terlambat'],
+                        'status' => $siswaData['status'],
+                        'sanksi' => $siswaData['sanksi'] ?? null,
+                        'catatan_petugas' => $request->catatan_batch,
+                    ]);
+                    $updatedIds[] = $keterlambatan->id;
+                }
+            }
+        }
+        
+        // Remove siswa that were not included in the update (deleted from batch)
+        $keterlambatanBatch->whereNotIn('id', $updatedIds)->each(function($keterlambatan) {
+            $keterlambatan->delete();
+        });
+
+        // Add new siswa to batch with same created_at timestamp to maintain batch grouping
+        if ($request->has('new_siswa') && is_array($request->new_siswa)) {
+            // Get the original batch's petugas_id and created_at for consistency
+            $originalBatch = $keterlambatanBatch->first();
+            $batchPetugasId = $originalBatch ? $originalBatch->petugas_id : ($currentPetugas ? $currentPetugas->id : null);
+            $batchCreatedAt = $originalBatch ? $originalBatch->created_at : now();
             
-            if ($siswaData) {
-                $keterlambatan->update([
-                    'tanggal' => $request->tanggal,
-                    'jam_terlambat' => $siswaData['jam_terlambat'],
-                    'alasan_terlambat' => $siswaData['alasan_terlambat'],
-                    'status' => $siswaData['status'],
-                    'sanksi' => $siswaData['sanksi'] ?? null,
-                    'catatan_petugas' => $request->catatan_batch,
-                ]);
+            foreach ($request->new_siswa as $newSiswaData) {
+                if (!empty($newSiswaData['siswa_id'])) {
+                    // Get siswa and kelas data
+                    $siswa = Siswa::find($newSiswaData['siswa_id']);
+                    if ($siswa) {
+                        // Create new record with same created_at as original batch
+                        $newKeterlambatan = new SiswaKeterlambatan([
+                            'siswa_id' => $newSiswaData['siswa_id'],
+                            'kelas_id' => $siswa->kelas_id,
+                            'tanggal' => $request->tanggal,
+                            'jam_terlambat' => $newSiswaData['jam_terlambat'],
+                            'alasan_terlambat' => $newSiswaData['alasan_terlambat'],
+                            'status' => $newSiswaData['status'],
+                            'sanksi' => $newSiswaData['sanksi'] ?? null,
+                            'petugas_id' => $batchPetugasId,
+                            'catatan_petugas' => $request->catatan_batch,
+                        ]);
+                        
+                        // Manually set created_at and updated_at to maintain batch grouping
+                        $newKeterlambatan->created_at = $batchCreatedAt;
+                        $newKeterlambatan->updated_at = now();
+                        $newKeterlambatan->save();
+                    }
+                }
             }
         }
 
@@ -533,8 +586,9 @@ class KeterlambatanController extends Controller
     {
         $keterlambatan->load(['siswa', 'kelas']);
         $kelas = Kelas::with('jurusan')->orderBy('nama_kelas')->get();
+        $siswaList = Siswa::with('kelas')->orderBy('nama_lengkap')->get();
 
-        return view('kesiswaan.keterlambatan.edit', compact('keterlambatan', 'kelas'));
+        return view('kesiswaan.keterlambatan.edit', compact('keterlambatan', 'kelas', 'siswaList'));
     }
 
     public function update(Request $request, SiswaKeterlambatan $keterlambatan)

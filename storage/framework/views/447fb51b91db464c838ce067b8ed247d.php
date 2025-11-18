@@ -1,26 +1,26 @@
-@extends('layouts.kesiswaan')
 
-@section('page-header')
+
+<?php $__env->startSection('page-header'); ?>
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
             <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Edit Batch Keterlambatan</h1>
-            <p class="mt-1 text-sm text-gray-600">Edit data keterlambatan untuk {{ $batchData['jumlah_siswa'] }} siswa pada {{ \Carbon\Carbon::parse($batchData['tanggal'])->format('d/m/Y') }}</p>
+            <p class="mt-1 text-sm text-gray-600">Edit data keterlambatan untuk <?php echo e($batchData['jumlah_siswa']); ?> siswa pada <?php echo e(\Carbon\Carbon::parse($batchData['tanggal'])->format('d/m/Y')); ?></p>
         </div>
         <div class="mt-3 sm:mt-0">
-            <a href="{{ route('kesiswaan.keterlambatan.index') }}" 
+            <a href="<?php echo e(route('kesiswaan.keterlambatan.index')); ?>" 
                class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors">
                 <i class="fas fa-arrow-left mr-2"></i>
                 Kembali
             </a>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-    <form action="{{ route('kesiswaan.keterlambatan.updateBatch', [$batchData['tanggal'], $batchData['petugas_id'], $batchData['created_at']]) }}" method="POST" class="space-y-6">
-        @csrf
-        @method('PUT')
+    <form action="<?php echo e(route('kesiswaan.keterlambatan.updateBatch', [$batchData['tanggal'], $batchData['petugas_id'], $batchData['created_at']])); ?>" method="POST" class="space-y-6">
+        <?php echo csrf_field(); ?>
+        <?php echo method_field('PUT'); ?>
         
         <!-- Batch Information -->
         <div class="p-4 sm:p-6 border-b border-gray-200">
@@ -35,12 +35,19 @@
                     <input type="date" 
                            id="tanggal" 
                            name="tanggal" 
-                           value="{{ $batchData['tanggal'] }}"
+                           value="<?php echo e($batchData['tanggal']); ?>"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                            required>
-                    @error('tanggal')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    <?php $__errorArgs = ['tanggal'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <p class="mt-1 text-sm text-red-600"><?php echo e($message); ?></p>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <!-- Status Batch -->
@@ -52,20 +59,27 @@
                             name="status_batch" 
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                             required>
-                        <option value="belum_ditindak" {{ $batchData['status_umum'] == 'belum_ditindak' ? 'selected' : '' }}>Belum Ditindak</option>
-                        <option value="sudah_ditindak" {{ $batchData['status_umum'] == 'sudah_ditindak' ? 'selected' : '' }}>Sudah Ditindak</option>
-                        <option value="selesai" {{ $batchData['status_umum'] == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                        <option value="belum_ditindak" <?php echo e($batchData['status_umum'] == 'belum_ditindak' ? 'selected' : ''); ?>>Belum Ditindak</option>
+                        <option value="sudah_ditindak" <?php echo e($batchData['status_umum'] == 'sudah_ditindak' ? 'selected' : ''); ?>>Sudah Ditindak</option>
+                        <option value="selesai" <?php echo e($batchData['status_umum'] == 'selesai' ? 'selected' : ''); ?>>Selesai</option>
                     </select>
-                    @error('status_batch')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    <?php $__errorArgs = ['status_batch'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <p class="mt-1 text-sm text-red-600"><?php echo e($message); ?></p>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <!-- Jumlah Siswa (Read only) -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Siswa</label>
                     <div class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700">
-                        {{ $batchData['jumlah_siswa'] }} siswa
+                        <?php echo e($batchData['jumlah_siswa']); ?> siswa
                     </div>
                 </div>
             </div>
@@ -79,10 +93,17 @@
                           name="catatan_batch" 
                           rows="3" 
                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                          placeholder="Catatan umum untuk batch keterlambatan ini...">{{ old('catatan_batch', $keterlambatanBatch->first()->catatan_petugas ?? '') }}</textarea>
-                @error('catatan_batch')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
+                          placeholder="Catatan umum untuk batch keterlambatan ini..."><?php echo e(old('catatan_batch', $keterlambatanBatch->first()->catatan_petugas ?? '')); ?></textarea>
+                <?php $__errorArgs = ['catatan_batch'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <p class="mt-1 text-sm text-red-600"><?php echo e($message); ?></p>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <!-- Sanksi Batch -->
@@ -94,10 +115,17 @@
                           name="sanksi_batch" 
                           rows="2" 
                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                          placeholder="Sanksi yang diberikan untuk batch ini...">{{ old('sanksi_batch', $keterlambatanBatch->first()->sanksi ?? '') }}</textarea>
-                @error('sanksi_batch')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
+                          placeholder="Sanksi yang diberikan untuk batch ini..."><?php echo e(old('sanksi_batch', $keterlambatanBatch->first()->sanksi ?? '')); ?></textarea>
+                <?php $__errorArgs = ['sanksi_batch'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <p class="mt-1 text-sm text-red-600"><?php echo e($message); ?></p>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
@@ -123,16 +151,17 @@
             </div>
             
             <div class="space-y-4" id="siswaContainer">
-                @foreach($keterlambatanBatch as $keterlambatan)
-                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 siswa-item" data-siswa-id="{{ $keterlambatan->id }}">
+                <?php $__currentLoopData = $keterlambatanBatch; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $keterlambatan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 siswa-item" data-siswa-id="<?php echo e($keterlambatan->id); ?>">
                     <div class="flex items-start justify-between mb-3">
                         <div class="flex items-center">
                             <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-sm mr-3">
-                                {{ substr($keterlambatan->siswa->nama_lengkap, 0, 2) }}
+                                <?php echo e(substr($keterlambatan->siswa->nama_lengkap, 0, 2)); ?>
+
                             </div>
                             <div>
-                                <div class="text-sm font-medium text-gray-900">{{ $keterlambatan->siswa->nama_lengkap }}</div>
-                                <div class="text-xs text-gray-500">{{ $keterlambatan->siswa->nis }} • {{ $keterlambatan->kelas->nama_kelas }}</div>
+                                <div class="text-sm font-medium text-gray-900"><?php echo e($keterlambatan->siswa->nama_lengkap); ?></div>
+                                <div class="text-xs text-gray-500"><?php echo e($keterlambatan->siswa->nis); ?> • <?php echo e($keterlambatan->kelas->nama_kelas); ?></div>
                             </div>
                         </div>
                         <button type="button" class="remove-siswa text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors" title="Hapus siswa dari batch">
@@ -147,8 +176,8 @@
                                 Jam Terlambat <span class="text-red-500">*</span>
                             </label>
                             <input type="time" 
-                                   name="siswa[{{ $keterlambatan->id }}][jam_terlambat]" 
-                                   value="{{ old('siswa.'.$keterlambatan->id.'.jam_terlambat', $keterlambatan->jam_terlambat_format) }}"
+                                   name="siswa[<?php echo e($keterlambatan->id); ?>][jam_terlambat]" 
+                                   value="<?php echo e(old('siswa.'.$keterlambatan->id.'.jam_terlambat', $keterlambatan->jam_terlambat_format)); ?>"
                                    class="w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                    required>
                         </div>
@@ -158,12 +187,12 @@
                             <label class="block text-xs font-medium text-gray-700 mb-1">
                                 Status <span class="text-red-500">*</span>
                             </label>
-                            <select name="siswa[{{ $keterlambatan->id }}][status]" 
+                            <select name="siswa[<?php echo e($keterlambatan->id); ?>][status]" 
                                     class="w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                     required>
-                                <option value="belum_ditindak" {{ old('siswa.'.$keterlambatan->id.'.status', $keterlambatan->status) == 'belum_ditindak' ? 'selected' : '' }}>Belum Ditindak</option>
-                                <option value="sudah_ditindak" {{ old('siswa.'.$keterlambatan->id.'.status', $keterlambatan->status) == 'sudah_ditindak' ? 'selected' : '' }}>Sudah Ditindak</option>
-                                <option value="selesai" {{ old('siswa.'.$keterlambatan->id.'.status', $keterlambatan->status) == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                                <option value="belum_ditindak" <?php echo e(old('siswa.'.$keterlambatan->id.'.status', $keterlambatan->status) == 'belum_ditindak' ? 'selected' : ''); ?>>Belum Ditindak</option>
+                                <option value="sudah_ditindak" <?php echo e(old('siswa.'.$keterlambatan->id.'.status', $keterlambatan->status) == 'sudah_ditindak' ? 'selected' : ''); ?>>Sudah Ditindak</option>
+                                <option value="selesai" <?php echo e(old('siswa.'.$keterlambatan->id.'.status', $keterlambatan->status) == 'selesai' ? 'selected' : ''); ?>>Selesai</option>
                             </select>
                         </div>
 
@@ -173,8 +202,8 @@
                                 Alasan Terlambat <span class="text-red-500">*</span>
                             </label>
                             <input type="text" 
-                                   name="siswa[{{ $keterlambatan->id }}][alasan_terlambat]" 
-                                   value="{{ old('siswa.'.$keterlambatan->id.'.alasan_terlambat', $keterlambatan->alasan_terlambat) }}"
+                                   name="siswa[<?php echo e($keterlambatan->id); ?>][alasan_terlambat]" 
+                                   value="<?php echo e(old('siswa.'.$keterlambatan->id.'.alasan_terlambat', $keterlambatan->alasan_terlambat)); ?>"
                                    class="w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                    placeholder="Alasan keterlambatan..."
                                    required>
@@ -187,13 +216,13 @@
                             Sanksi Individual (Opsional)
                         </label>
                         <input type="text" 
-                               name="siswa[{{ $keterlambatan->id }}][sanksi]" 
-                               value="{{ old('siswa.'.$keterlambatan->id.'.sanksi', $keterlambatan->sanksi) }}"
+                               name="siswa[<?php echo e($keterlambatan->id); ?>][sanksi]" 
+                               value="<?php echo e(old('siswa.'.$keterlambatan->id.'.sanksi', $keterlambatan->sanksi)); ?>"
                                class="w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                placeholder="Sanksi khusus untuk siswa ini...">
                     </div>
                 </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </div>
 
@@ -204,7 +233,7 @@
                 <i class="fas fa-save mr-2"></i>
                 Simpan Perubahan
             </button>
-            <a href="{{ route('kesiswaan.keterlambatan.index') }}" 
+            <a href="<?php echo e(route('kesiswaan.keterlambatan.index')); ?>" 
                class="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                 <i class="fas fa-times mr-2"></i>
                 Batal
@@ -213,12 +242,12 @@
     </form>
 </div>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const siswaContainer = document.getElementById('siswaContainer');
     const addSiswaBtn = document.getElementById('addSiswaBtn');
-    const siswaOptions = @json($siswaList->toArray());
+    const siswaOptions = <?php echo json_encode($siswaList->toArray(), 15, 512) ?>;
     let newSiswaCounter = 0;
 
     // Auto update all student status when batch status changes
@@ -450,5 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-@endpush
-@endsection
+<?php $__env->stopPush(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.kesiswaan', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\wamp64\www\website-smk3\resources\views/kesiswaan/keterlambatan/edit_batch.blade.php ENDPATH**/ ?>
