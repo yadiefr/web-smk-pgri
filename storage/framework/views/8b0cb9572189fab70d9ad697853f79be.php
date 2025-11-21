@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - {{ setting('nama_sekolah', 'SMK PGRI CIKAMPEK') }}</title>
+    <title>Login - <?php echo e(setting('nama_sekolah', 'SMK PGRI CIKAMPEK')); ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link href="{{ asset('css/login-light.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="<?php echo e(asset('css/login-light.css')); ?>?v=<?php echo e(time()); ?>" rel="stylesheet">
 </head>
 <body>
     <!-- Background -->
@@ -34,10 +34,10 @@
         <div class="welcome-section">
             <h1 class="welcome-title">
                 SELAMAT DATANG DI<br>
-                <span class="adventure-text">{{ strtoupper(setting('nama_sekolah', 'SMK PGRI CIKAMPEK')) }}</span>
+                <span class="adventure-text"><?php echo e(strtoupper(setting('nama_sekolah', 'SMK PGRI CIKAMPEK'))); ?></span>
             </h1>
             <p class="welcome-description">
-                Akses sistem pembelajaran digital {{ setting('nama_sekolah', 'SMK PGRI CIKAMPEK') }} dan mulai perjalanan edukasimu menuju masa depan yang gemilang.
+                Akses sistem pembelajaran digital <?php echo e(setting('nama_sekolah', 'SMK PGRI CIKAMPEK')); ?> dan mulai perjalanan edukasimu menuju masa depan yang gemilang.
             </p>
         </div>
         
@@ -48,29 +48,32 @@
                 <p class="login-subtitle">Silakan masuk ke akun Anda</p>
                 
                 <!-- Error Messages -->
-                @if ($errors->any())
+                <?php if($errors->any()): ?>
                     <div class="alert alert-danger">
-                        @foreach ($errors->all() as $error)
-                            {{ $error }}
-                        @endforeach
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php echo e($error); ?>
+
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
-                @endif
+                <?php endif; ?>
                 
-                @if (session('error'))
+                <?php if(session('error')): ?>
                     <div class="alert alert-danger">
-                        {{ session('error') }}
+                        <?php echo e(session('error')); ?>
+
                     </div>
-                @endif
+                <?php endif; ?>
                 
-                @if (session('success'))
+                <?php if(session('success')): ?>
                     <div class="alert alert-success">
-                        {{ session('success') }}
+                        <?php echo e(session('success')); ?>
+
                     </div>
-                @endif
+                <?php endif; ?>
                 
                 <!-- Login Form -->
-                <form method="POST" action="{{ route('login') }}" id="loginForm">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('login')); ?>" id="loginForm">
+                    <?php echo csrf_field(); ?>
                     
                     <div class="form-group">
                         <input 
@@ -79,7 +82,7 @@
                             id="username"
                             class="form-control" 
                             placeholder="Email/NIS" 
-                            value="{{ old('username') }}" 
+                            value="<?php echo e(old('username')); ?>" 
                             required 
                             autocomplete="username"
                         >
@@ -151,3 +154,4 @@
     </script>
 </body>
 </html>
+<?php /**PATH C:\wamp64\www\website-smk3\resources\views/auth/login.blade.php ENDPATH**/ ?>

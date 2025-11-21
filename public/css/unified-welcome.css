@@ -333,12 +333,10 @@ body {
     border: 1px solid rgba(59, 130, 246, 0.1);
     border-radius: 16px;
     box-shadow: var(--shadow-md);
-    transition: all 0.3s ease;
 }
 
 .glass:hover {
-    box-shadow: var(--shadow-xl);
-    transform: translateY(-2px);
+    /* Hover effect removed */
 }
 
 /* Gradient Text */
@@ -496,11 +494,10 @@ nav .bebas {
 /* Cards */
 .card-3d {
     transform: perspective(1000px);
-    transition: all 0.3s ease;
 }
 
 .card-3d:hover {
-    transform: perspective(1000px) translateY(-8px) rotateX(5deg);
+    transform: perspective(1000px);
 }
 
 /* Program Cards */
@@ -775,12 +772,10 @@ nav .bebas {
     border-radius: 8px;
     font-weight: 600;
     text-decoration: none;
-    transition: all 0.3s ease;
 }
 
 .location-link-modern:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    /* Hover effect removed */
 }
 
 .register-btn-modern {
@@ -791,12 +786,10 @@ nav .bebas {
     border-radius: 8px;
     font-weight: 600;
     text-decoration: none;
-    transition: all 0.3s ease;
 }
 
 .register-btn-modern:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    /* Hover effect removed */
 }
 
 /* CTA Button */
