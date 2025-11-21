@@ -14,7 +14,7 @@
             <div class="flex gap-3">
                 <a href="<?php echo e(route('kesiswaan.keterlambatan.rekap')); ?>" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 flex items-center gap-2 shadow-sm">
                     <i class="fas fa-file-excel"></i>
-                    <span>Export</span>
+                    <span>Rekap dan Export</span>
                 </a>
                 <a href="<?php echo e(route('kesiswaan.keterlambatan.create')); ?>" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 flex items-center gap-2 shadow-sm">
                     <i class="fas fa-plus"></i>

@@ -40,17 +40,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-    @if($isProduction)
-        <link href="{{ asset('css/unified-welcome.css') }}?v={{ filemtime(public_path('css/unified-welcome.css')) }}" rel="stylesheet">
-    @else
-        <link href="{{ asset('css/unified-welcome.css') }}" rel="stylesheet">
-    @endif
+    <link href="{{ asset('css/unified-welcome.css') }}?v={{ time() }}" rel="stylesheet">
     
     <!-- External JavaScript -->
     @if($isProduction)
-        <script src="{{ asset('js/welcome.js') }}?v={{ filemtime(public_path('js/welcome.js')) }}" defer></script>
+        <script src="{{ asset('js/welcome-light.js') }}?v={{ filemtime(public_path('js/welcome-light.js')) }}" defer></script>
     @else
-        <script src="{{ asset('js/welcome.js') }}" defer></script>
+        <script src="{{ asset('js/welcome-light.js') }}" defer></script>
     @endif
     
     <!-- Environment Detection Script -->
@@ -71,7 +67,7 @@
     <!-- Mobile Menu and Interactive Functions - Moved to external JS -->
 
 </head>
-<body class="pattern-bg text-white overflow-x-hidden">
+<body class="pattern-bg overflow-x-hidden">
     <!-- Animated Background -->
     <ul class="animated-bg">
         <li></li>
@@ -87,10 +83,11 @@
     </ul>
       
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass py-3 md:py-5 mobile-consistent-padding shadow-md">
-        <div class="flex justify-between items-center" style="margin: 0; padding: 0 1rem; width: 100%; max-width: 1280px; margin-left: auto; margin-right: auto;">
-            <!-- Logo and Brand -->
-            <div class="flex items-center space-x-2 py-1">
+    <nav class="fixed w-full z-50 glass shadow-md" style="padding: 0.75rem 0;">
+        <div class="mobile-consistent-padding">
+            <div class="flex justify-between items-center">
+                <!-- Logo and Brand -->
+                <div class="flex items-center space-x-2">
                 @if(setting('logo_sekolah'))
                     <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center overflow-hidden">
                         <img src="{{ setting_with_cache_bust('logo_sekolah', null, true) }}" alt="{{ setting('nama_sekolah', 'SMK PGRI CIKAMPEK') }}" class="w-full h-full object-contain">
@@ -100,59 +97,31 @@
                         <i class="fas fa-graduation-cap text-white text-lg md:text-xl"></i>
                     </div>
                 @endif
-                <span class="bebas text-xl md:text-2xl font-bold md:tracking-wider">{{ strtoupper(setting('nama_sekolah', 'SMK PGRI CIKAMPEK')) }}</span>
+                <span class="bebas text-base md:text-xl lg:text-2xl font-bold tracking-wider text-gray-800">{{ strtoupper(setting('nama_sekolah', 'SMK PGRI CIKAMPEK')) }}</span>
             </div>
             
             <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-4 lg:space-x-6 items-center">
-                <a href="#home" class="hover:text-cyan-400 transition-all duration-300 hover:scale-105 text-sm lg:text-base py-2 px-2 font-medium">BERANDA</a>
-                <a href="#about" class="hover:text-cyan-400 transition-all duration-300 hover:scale-105 text-sm lg:text-base py-2 px-2 font-medium">KEUNGGULAN</a>
-                <a href="#programs" class="hover:text-cyan-400 transition-all duration-300 hover:scale-105 text-sm lg:text-base py-2 px-2 font-medium">PROGRAM</a>
-                <a href="{{ route('berita.index') }}" class="hover:text-cyan-400 transition-all duration-300 hover:scale-105 text-sm lg:text-base py-2 px-2 font-medium">BERITA</a>
-                <a href="{{ route('galeri.index') }}" class="hover:text-cyan-400 transition-all duration-300 hover:scale-105 text-sm lg:text-base py-2 px-2 font-medium">GALERI</a>
-                <a href="/login" class="bg-gradient-to-r from-cyan-400 to-pink-500 px-6 py-2 rounded-full font-semibold hover:scale-105 transition-all duration-300 text-sm text-white ml-4 shadow-md">LOGIN</a>
+            <div class="hidden md:flex space-x-2 lg:space-x-4 xl:space-x-6 items-center">
+                <a href="#home" class="text-gray-700 hover:text-cyan-500 transition-all duration-300 text-sm lg:text-base py-2 px-2 font-medium">BERANDA</a>
+                <a href="#about" class="text-gray-700 hover:text-cyan-500 transition-all duration-300 text-sm lg:text-base py-2 px-2 font-medium">KEUNGGULAN</a>
+                <a href="#programs" class="text-gray-700 hover:text-cyan-500 transition-all duration-300 text-sm lg:text-base py-2 px-2 font-medium">PROGRAM</a>
+                <a href="{{ route('berita.index') }}" class="text-gray-700 hover:text-cyan-500 transition-all duration-300 text-sm lg:text-base py-2 px-2 font-medium">BERITA</a>
+                <a href="{{ route('galeri.index') }}" class="text-gray-700 hover:text-cyan-500 transition-all duration-300 text-sm lg:text-base py-2 px-2 font-medium">GALERI</a>
+                <a href="/login" class="bg-cyan-500 px-4 lg:px-6 py-2 rounded-full font-semibold hover:bg-cyan-600 transition-all duration-300 text-sm text-white ml-2 lg:ml-4 shadow-md">LOGIN</a>
             </div>
             
             <!-- Mobile Action Buttons -->
-            <div class="md:hidden flex items-center space-x-3 ml-auto">
+            <div class="md:hidden flex items-center space-x-2 ml-auto">
                 <!-- Login Button (Always Visible) -->
-                <a href="/login" class="bg-gradient-to-r from-cyan-400 to-pink-500 px-3 py-2 rounded-full font-semibold hover:scale-105 transition-all duration-300 text-xs text-white shadow-md" style="
-                    color: white !important; 
-                    text-decoration: none !important;
-                    background: linear-gradient(135deg, #06b6d4, #ec4899) !important;
-                    border: none !important;
-                    font-weight: 600 !important;
-                    text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
-                    min-width: 50px !important;
-                    text-align: center !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                ">
+                <a href="/login" class="bg-cyan-500 px-3 py-1.5 rounded-full font-semibold hover:bg-cyan-600 transition-all duration-300 text-xs text-white shadow-md">
                     LOGIN
                 </a>
                 
                 <!-- Mobile Menu Button -->
-                <button type="button" id="mobile-menu-btn" style="
-                    position: relative;
-                    z-index: 50;
-                    background: rgba(6, 182, 212, 0.1);
-                    border: 2px solid rgba(6, 182, 212, 0.5);
-                    border-radius: 8px;
-                    padding: 8px;
-                    cursor: pointer;
-                    min-width: 40px;
-                    min-height: 40px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: white;
-                    transition: all 0.3s ease;
-                    backdrop-filter: blur(10px);
-                    -webkit-tap-highlight-color: transparent;
-                ">
-                    <i class="fas fa-bars text-lg" style="pointer-events: none; user-select: none;"></i>
+                <button type="button" id="mobile-menu-btn" class="relative z-50 bg-cyan-50 border-2 border-cyan-300 rounded-lg p-2 cursor-pointer w-10 h-10 flex items-center justify-center text-cyan-600 transition-all duration-300 hover:bg-cyan-100">
+                    <i class="fas fa-bars text-lg"></i>
                 </button>
+            </div>
             </div>
         </div>
         
@@ -173,20 +142,20 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         " class="md:hidden">
             <div class="py-6 px-6 space-y-2">
-                <a href="#home" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-400 transition-all duration-300 text-white font-medium border-l-2 border-transparent hover:border-cyan-400">
-                    <i class="fas fa-home mr-3 text-cyan-400"></i>BERANDA
+                <a href="#home" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-500 transition-all duration-300 text-gray-700 font-medium border-l-2 border-transparent hover:border-cyan-500">
+                    <i class="fas fa-home mr-3 text-cyan-500"></i>BERANDA
                 </a>
-                <a href="#about" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-400 transition-all duration-300 text-white font-medium border-l-2 border-transparent hover:border-cyan-400">
-                    <i class="fas fa-star mr-3 text-cyan-400"></i>KEUNGGULAN
+                <a href="#about" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-500 transition-all duration-300 text-gray-700 font-medium border-l-2 border-transparent hover:border-cyan-500">
+                    <i class="fas fa-star mr-3 text-cyan-500"></i>KEUNGGULAN
                 </a>
-                <a href="#programs" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-400 transition-all duration-300 text-white font-medium border-l-2 border-transparent hover:border-cyan-400">
-                    <i class="fas fa-graduation-cap mr-3 text-cyan-400"></i>PROGRAM
+                <a href="#programs" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-500 transition-all duration-300 text-gray-700 font-medium border-l-2 border-transparent hover:border-cyan-500">
+                    <i class="fas fa-graduation-cap mr-3 text-cyan-500"></i>PROGRAM
                 </a>
-                <a href="{{ route('berita.index') }}" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-400 transition-all duration-300 text-white font-medium border-l-2 border-transparent hover:border-cyan-400">
-                    <i class="fas fa-newspaper mr-3 text-cyan-400"></i>BERITA
+                <a href="{{ route('berita.index') }}" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-500 transition-all duration-300 text-gray-700 font-medium border-l-2 border-transparent hover:border-cyan-500">
+                    <i class="fas fa-newspaper mr-3 text-cyan-500"></i>BERITA
                 </a>
-                <a href="{{ route('galeri.index') }}" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-400 transition-all duration-300 text-white font-medium border-l-2 border-transparent hover:border-cyan-400">
-                    <i class="fas fa-images mr-3 text-cyan-400"></i>GALERI
+                <a href="{{ route('galeri.index') }}" class="block py-3 px-4 rounded-lg hover:bg-cyan-400/10 hover:text-cyan-500 transition-all duration-300 text-gray-700 font-medium border-l-2 border-transparent hover:border-cyan-500">
+                    <i class="fas fa-images mr-3 text-cyan-500"></i>GALERI
                 </a>
             </div>
         </div>
@@ -197,9 +166,11 @@
         $activeBanner = \App\Models\HeroBanner::where('is_active', true)->latest()->first();
         $activeBackground = \App\Models\HeroBackground::where('is_active', true)->latest()->first();
         $heroStyle = '';
+        $hasBackground = false;
         
         // Background terpisah dari banner dengan optimasi scroll
         if($activeBackground && $activeBackground->image) {
+            $hasBackground = true;
             $heroStyle .= 'background-image: url(' . $activeBackground->image_url . ') !important;';
             $heroStyle .= 'background-size: cover !important;';
             $heroStyle .= 'background-position: center center !important;';
@@ -212,10 +183,34 @@
             $heroStyle .= 'backface-visibility: hidden !important;';
         }
     @endphp
-    <section id="home" class="min-h-screen md:min-h-screen h-screen flex items-center justify-center relative overflow-hidden" style="padding-top: 80px; padding-bottom: 80px; {{ $heroStyle }}">
+    <section id="home" class="min-h-screen md:min-h-screen h-screen flex items-center justify-center relative overflow-hidden {{ $hasBackground ? 'has-custom-bg' : '' }}" style="padding-top: 80px; padding-bottom: 80px; {{ $heroStyle }} @if(!$hasBackground) background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 20%, #fae8ff 40%, #fce7f3 60%, #dbeafe 80%, #e0f2fe 100%) !important; @endif">
         @if($activeBackground && $activeBackground->image)
             <!-- Background Overlay for Better Text Readability -->
-            <div class="absolute inset-0 bg-black/40 z-0"></div>
+            <div class="absolute inset-0 bg-white/40 z-0"></div>
+        @else
+            <!-- Neural Network Particles CSS Animation -->
+            <div class="neural-network-bg">
+                <div class="particle-container">
+                    @for ($i = 1; $i <= 50; $i++)
+                        <div class="particle particle-{{ $i }}"></div>
+                    @endfor
+                </div>
+                <svg class="connection-lines" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="lineGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgba(6, 182, 212, 0.4);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgba(168, 85, 247, 0.3);stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="lineGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgba(236, 72, 153, 0.4);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgba(59, 130, 246, 0.3);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    @for ($i = 1; $i <= 30; $i++)
+                        <line class="connection-line line-{{ $i }}" stroke="url(#lineGradient{{ $i % 2 + 1 }})" stroke-width="1.5" />
+                    @endfor
+                </svg>
+            </div>
         @endif
         <div class="mobile-consistent-padding relative z-10" style="width: 100%; padding-top: 3rem;">
             <div class="flex justify-center items-start min-h-full">
@@ -223,16 +218,16 @@
                     <!-- Content Only - No Image -->
                     <div class="space-y-4 text-center" data-aos="fade-up" data-aos-duration="1000">
                         <div class="space-y-2">
-                            <p class="text-cyan-400 bebas text-6xl tracking-wider">{{ strtoupper(setting('nama_sekolah', 'SMK PGRI CIKAMPEK')) }}</p>
-                            <h1 class="bebas text-7xl md:text-8xl leading-none">
-                                <span class="gradient-text">{!! str_replace(['<br>', '<br/>', '<br />'], '</span><br><span class="gradient-text">', $activeBanner->title) !!}</span>
+                            <p class="text-cyan-600 bebas text-6xl tracking-wider">{{ strtoupper(setting('nama_sekolah', 'SMK PGRI CIKAMPEK')) }}</p>
+                            <h1 class="bebas text-7xl md:text-8xl leading-none text-cyan-600">
+                                {!! $activeBanner->title !!}
                             </h1>
                         </div>
                         
-                        <p class="text-gray-300 text-sm md:text-lg max-w-md mx-auto">{{ $activeBanner->description }}</p>
+                        <p class="text-gray-700 text-sm md:text-lg max-w-md mx-auto">{{ $activeBanner->description }}</p>
                         
                         <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
-                            <a href="{{ $activeBanner->button_url }}" class="group relative px-8 py-4 bg-transparent border-2 border-cyan-400 rounded-lg overflow-hidden">
+                            <a href="{{ $activeBanner->button_url }}" class="group relative px-8 py-4 bg-transparent border-2 border-cyan-500 rounded-lg overflow-hidden text-gray-800 hover:text-white transition-colors">
                                 <span class="relative z-10 flex items-center">
                                     <i class="fas fa-rocket mr-2"></i>
                                     {{ $activeBanner->button_text }}
@@ -245,18 +240,18 @@
                     <!-- Content Only - No Image -->
                     <div class="space-y-4 text-center" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 2rem;">
                         <div class="space-y-2">
-                            <h1 class="bebas text-5xl md:text-6xl leading-none hero-title-bold">
-                                <span class="gradient-text">Siapkan Masa Depanmu di</span><br>
-                                <span class="hero-school-name">{{ strtoupper(setting('nama_sekolah')) }}</span>
+                            <h1 class="bebas text-5xl md:text-6xl leading-none hero-title-bold text-cyan-600">
+                                Siapkan Masa Depanmu di<br>
+                                {{ strtoupper(setting('nama_sekolah')) }}
                             </h1>
                         </div>
                         
-                        <p class="text-gray-300 text-lg max-w-md mx-auto hero-description">
+                        <p class="text-gray-600 text-lg max-w-md mx-auto hero-description">
                             {{ setting('alamat_sekolah', 'Membentuk generasi visioner dengan pendidikan berbasis teknologi, kreativitas, dan karakter unggul.') }}
                         </p>
                         
                         <div class="flex flex-wrap gap-4 justify-center">
-                            <a href="{{ route('ppdb.register') }}" class="group relative px-8 py-4 bg-transparent border-2 border-cyan-400 rounded-lg overflow-hidden">
+                            <a href="{{ route('ppdb.register') }}" class="group relative px-8 py-4 bg-transparent border-2 border-cyan-500 rounded-lg overflow-hidden text-gray-800 hover:text-white transition-colors">
                                 <span class="relative z-10 flex items-center">
                                     <i class="fas fa-user-plus mr-2"></i>
                                     DAFTAR SEKARANG
@@ -284,14 +279,14 @@
                 <li></li>
                 <li></li>
             </ul>
-            <div class="absolute inset-0 bg-gradient-to-br from-dark-bg/80 via-purple-900/15 to-dark-bg/80" style="z-index: 1;"></div>
+            <div class="absolute inset-0 bg-white/40" style="z-index: 1;"></div>
         </div>
 
         <div class="mobile-consistent-padding relative z-10">
             <div class="text-center mb-16" data-aos="fade-up">
-                <div class="text-electric-pink font-bold tracking-widest mb-4 uppercase">KEUNGGULAN KAMI</div>
-                <h2 class="bebas text-5xl md:text-6xl gradient-text mb-6">MENGAPA {{ strtoupper(setting('nama_sekolah', 'SMK PGRI CIKAMPEK')) }}?</h2>
-                <p class="text-white/80 text-lg max-w-3xl mx-auto">Pilih kami sebagai partner terbaik dalam mempersiapkan masa depan yang cerah dengan keunggulan yang telah terbukti.</p>
+                <div class="text-pink-600 font-bold tracking-widest mb-4 uppercase">KEUNGGULAN KAMI</div>
+                <h2 class="bebas text-5xl md:text-6xl text-cyan-600 mb-6">MENGAPA {{ strtoupper(setting('nama_sekolah', 'SMK PGRI CIKAMPEK')) }}?</h2>
+                <p class="text-gray-600 text-lg max-w-3xl mx-auto">Pilih kami sebagai partner terbaik dalam mempersiapkan masa depan yang cerah dengan keunggulan yang telah terbukti.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-4">
@@ -299,14 +294,14 @@
                 <div class="col-span-1" data-aos="fade-up" data-aos-delay="100">
                     <div class="glass p-6 h-full">
                         <div class="h-32 mb-6 flex items-center justify-center bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl">
-                            <i class="fas fa-graduation-cap text-white text-5xl"></i>
+                            <i class="fas fa-graduation-cap text-white text-5xl drop-shadow-lg"></i>
                         </div>
-                        <h4 class="text-white text-xl font-bold mb-4">Kurikulum Berbasis Industri</h4>
-                        <p class="text-white/80 mb-6 leading-relaxed">Kurikulum kami dirancang bersama partner industri teknologi terkemuka untuk memastikan relevansi dengan kebutuhan dunia kerja.</p>
-                        <ul class="text-white/70 space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check text-neon-blue mr-2"></i>Materi Sesuai Industri</li>
-                            <li class="flex items-center"><i class="fas fa-check text-neon-blue mr-2"></i>Praktek Kerja Lapangan</li>
-                            <li class="flex items-center"><i class="fas fa-check text-neon-blue mr-2"></i>Sertifikasi Profesi</li>
+                        <h4 class="text-gray-800 text-xl font-bold mb-4">Kurikulum Berbasis Industri</h4>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Kurikulum kami dirancang bersama partner industri teknologi terkemuka untuk memastikan relevansi dengan kebutuhan dunia kerja.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-cyan-600 mr-2"></i>Materi Sesuai Industri</li>
+                            <li class="flex items-center"><i class="fas fa-check text-cyan-600 mr-2"></i>Praktek Kerja Lapangan</li>
+                            <li class="flex items-center"><i class="fas fa-check text-cyan-600 mr-2"></i>Sertifikasi Profesi</li>
                         </ul>
                     </div>
                 </div>
@@ -315,14 +310,14 @@
                 <div class="col-span-1" data-aos="fade-up" data-aos-delay="200">
                     <div class="glass p-6 h-full">
                         <div class="h-32 mb-6 flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-500 rounded-xl">
-                            <i class="fas fa-laptop-code text-white text-5xl"></i>
+                            <i class="fas fa-laptop-code text-white text-5xl drop-shadow-lg"></i>
                         </div>
-                        <h4 class="text-white text-xl font-bold mb-4">Teknologi Terkini</h4>
-                        <p class="text-white/80 mb-6 leading-relaxed">Fasilitas teknologi modern untuk mendukung pembelajaran digital dan inovatif dengan peralatan canggih terdepan.</p>
-                        <ul class="text-white/70 space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check text-electric-pink mr-2"></i>Lab Komputer Modern</li>
-                            <li class="flex items-center"><i class="fas fa-check text-electric-pink mr-2"></i>Software Terbaru</li>
-                            <li class="flex items-center"><i class="fas fa-check text-electric-pink mr-2"></i>Internet High Speed</li>
+                        <h4 class="text-gray-800 text-xl font-bold mb-4">Teknologi Terkini</h4>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Fasilitas teknologi modern untuk mendukung pembelajaran digital dan inovatif dengan peralatan canggih terdepan.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-pink-600 mr-2"></i>Lab Komputer Modern</li>
+                            <li class="flex items-center"><i class="fas fa-check text-pink-600 mr-2"></i>Software Terbaru</li>
+                            <li class="flex items-center"><i class="fas fa-check text-pink-600 mr-2"></i>Internet High Speed</li>
                         </ul>
                     </div>
                 </div>
@@ -331,14 +326,14 @@
                 <div class="col-span-1" data-aos="fade-up" data-aos-delay="300">
                     <div class="glass p-6 h-full">
                         <div class="h-32 mb-6 flex items-center justify-center bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl">
-                            <i class="fas fa-handshake text-white text-5xl"></i>
+                            <i class="fas fa-handshake text-white text-5xl drop-shadow-lg"></i>
                         </div>
-                        <h4 class="text-white text-xl font-bold mb-4">Kerjasama Industri</h4>
-                        <p class="text-white/80 mb-6 leading-relaxed">Kemitraan dengan perusahaan teknologi terkemuka untuk program magang dan rekrutmen lulusan terbaik.</p>
-                        <ul class="text-white/70 space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check text-yellow-400 mr-2"></i>Program Magang</li>
-                            <li class="flex items-center"><i class="fas fa-check text-yellow-400 mr-2"></i>Job Placement</li>
-                            <li class="flex items-center"><i class="fas fa-check text-yellow-400 mr-2"></i>Industry Mentoring</li>
+                        <h4 class="text-gray-800 text-xl font-bold mb-4">Kerjasama Industri</h4>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Kemitraan dengan perusahaan teknologi terkemuka untuk program magang dan rekrutmen lulusan terbaik.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-orange-600 mr-2"></i>Program Magang</li>
+                            <li class="flex items-center"><i class="fas fa-check text-orange-600 mr-2"></i>Job Placement</li>
+                            <li class="flex items-center"><i class="fas fa-check text-orange-600 mr-2"></i>Industry Mentoring</li>
                         </ul>
                     </div>
                 </div>
@@ -364,25 +359,25 @@
 
         <div class="mobile-consistent-padding relative z-10">
             <div class="text-center mb-16" data-aos="fade-up">
-                <div class="text-neon-blue font-bold tracking-widest mb-4 uppercase">FASILITAS UNGGULAN</div>
-                <h2 class="bebas text-5xl md:text-6xl gradient-text mb-6">Fasilitas untuk Pembelajaran Optimal</h2>
-                <p class="text-white/80 text-lg max-w-2xl mx-auto">Dilengkapi dengan fasilitas terdepan untuk mendukung proses pembelajaran yang efektif dan menyenangkan.</p>
+                <div class="text-cyan-600 font-bold tracking-widest mb-4 uppercase">FASILITAS UNGGULAN</div>
+                <h2 class="bebas text-5xl md:text-6xl text-cyan-600 mb-6">Fasilitas untuk Pembelajaran Optimal</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Dilengkapi dengan fasilitas terdepan untuk mendukung proses pembelajaran yang efektif dan menyenangkan.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-4">
                 <!-- Fasilitas RPL -->
                 <div class="col-span-1" data-aos="fade-up" data-aos-delay="100">
                     <div class="glass p-6 h-full">
-                        <div class="h-32 mb-6 flex items-center justify-center bg-gradient-to-br from-neon-blue to-vibrant-purple rounded-xl">
-                            <i class="fas fa-laptop-code text-white text-5xl"></i>
+                        <div class="h-32 mb-6 flex items-center justify-center bg-gradient-to-br from-cyan-500 to-purple-500 rounded-xl">
+                            <i class="fas fa-laptop-code text-white text-5xl drop-shadow-lg"></i>
                         </div>
-                        <h4 class="text-white text-xl font-bold mb-4">Lab Komputer & RPL</h4>
-                        <p class="text-white/80 mb-6 leading-relaxed">Laboratorium komputer lengkap untuk pembelajaran programming, web development, dan rekayasa perangkat lunak.</p>
-                        <ul class="text-white/70 space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check text-neon-blue mr-2"></i>40 Unit PC Spek Tinggi</li>
-                            <li class="flex items-center"><i class="fas fa-check text-neon-blue mr-2"></i>IDE & Development Tools</li>
-                            <li class="flex items-center"><i class="fas fa-check text-neon-blue mr-2"></i>Server & Database Systems</li>
-                            <li class="flex items-center"><i class="fas fa-check text-neon-blue mr-2"></i>Software Testing Environment</li>
+                        <h4 class="text-gray-800 text-xl font-bold mb-4">Lab Komputer & RPL</h4>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Laboratorium komputer lengkap untuk pembelajaran programming, web development, dan rekayasa perangkat lunak.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-cyan-600 mr-2"></i>40 Unit PC Spek Tinggi</li>
+                            <li class="flex items-center"><i class="fas fa-check text-cyan-600 mr-2"></i>IDE & Development Tools</li>
+                            <li class="flex items-center"><i class="fas fa-check text-cyan-600 mr-2"></i>Server & Database Systems</li>
+                            <li class="flex items-center"><i class="fas fa-check text-cyan-600 mr-2"></i>Software Testing Environment</li>
                         </ul>
                     </div>
                 </div>
@@ -390,16 +385,16 @@
                 <!-- Fasilitas TKR -->
                 <div class="col-span-1" data-aos="fade-up" data-aos-delay="200">
                     <div class="glass p-6 h-full">
-                        <div class="h-32 mb-6 flex items-center justify-center bg-gradient-to-br from-electric-pink to-vibrant-purple rounded-xl">
-                            <i class="fas fa-car text-white text-5xl"></i>
+                        <div class="h-32 mb-6 flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-500 rounded-xl">
+                            <i class="fas fa-car text-white text-5xl drop-shadow-lg"></i>
                         </div>
-                        <h4 class="text-white text-xl font-bold mb-4">Bengkel Otomotif (TKR)</h4>
-                        <p class="text-white/80 mb-6 leading-relaxed">Bengkel otomotif standar industri untuk praktik perawatan dan perbaikan kendaraan ringan.</p>
-                        <ul class="text-white/70 space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check text-electric-pink mr-2"></i>Mobil Praktik & Engine Stand</li>
-                            <li class="flex items-center"><i class="fas fa-check text-electric-pink mr-2"></i>Alat Diagnostik EFI</li>
-                            <li class="flex items-center"><i class="fas fa-check text-electric-pink mr-2"></i>Peralatan Tune Up & Overhaul</li>
-                            <li class="flex items-center"><i class="fas fa-check text-electric-pink mr-2"></i>Lift Hidrolik & Tools Set</li>
+                        <h4 class="text-gray-800 text-xl font-bold mb-4">Bengkel Otomotif (TKR)</h4>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Bengkel otomotif standar industri untuk praktik perawatan dan perbaikan kendaraan ringan.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-pink-600 mr-2"></i>Mobil Praktik & Engine Stand</li>
+                            <li class="flex items-center"><i class="fas fa-check text-pink-600 mr-2"></i>Alat Diagnostik EFI</li>
+                            <li class="flex items-center"><i class="fas fa-check text-pink-600 mr-2"></i>Peralatan Tune Up & Overhaul</li>
+                            <li class="flex items-center"><i class="fas fa-check text-pink-600 mr-2"></i>Lift Hidrolik & Tools Set</li>
                         </ul>
                     </div>
                 </div>
@@ -407,16 +402,16 @@
                 <!-- Fasilitas TMI -->
                 <div class="col-span-1" data-aos="fade-up" data-aos-delay="300">
                     <div class="glass p-6 h-full">
-                        <div class="h-32 mb-6 flex items-center justify-center bg-gradient-to-br from-vibrant-purple to-neon-blue rounded-xl">
-                            <i class="fas fa-industry text-white text-5xl"></i>
+                        <div class="h-32 mb-6 flex items-center justify-center bg-gradient-to-br from-purple-600 to-cyan-500 rounded-xl">
+                            <i class="fas fa-industry text-white text-5xl drop-shadow-lg"></i>
                         </div>
-                        <h4 class="text-white text-xl font-bold mb-4">Bengkel Mesin (TMI)</h4>
-                        <p class="text-white/80 mb-6 leading-relaxed">Bengkel teknik mekanik industri untuk praktik mesin bubut, frais, CNC, dan perawatan mesin pabrik.</p>
-                        <ul class="text-white/70 space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check text-vibrant-purple mr-2"></i>Mesin Bubut & Frais Konvensional</li>
-                            <li class="flex items-center"><i class="fas fa-check text-vibrant-purple mr-2"></i>CNC Programming & Machining</li>
-                            <li class="flex items-center"><i class="fas fa-check text-vibrant-purple mr-2"></i>Welding Equipment Set</li>
-                            <li class="flex items-center"><i class="fas fa-check text-vibrant-purple mr-2"></i>Precision Measurement Tools</li>
+                        <h4 class="text-gray-800 text-xl font-bold mb-4">Bengkel Mesin (TMI)</h4>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Bengkel teknik mekanik industri untuk praktik mesin bubut, frais, CNC, dan perawatan mesin pabrik.</p>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-purple-600 mr-2"></i>Mesin Bubut & Frais Konvensional</li>
+                            <li class="flex items-center"><i class="fas fa-check text-purple-600 mr-2"></i>CNC Programming & Machining</li>
+                            <li class="flex items-center"><i class="fas fa-check text-purple-600 mr-2"></i>Welding Equipment Set</li>
+                            <li class="flex items-center"><i class="fas fa-check text-purple-600 mr-2"></i>Precision Measurement Tools</li>
                         </ul>
                     </div>
                 </div>
@@ -442,9 +437,9 @@
 
         <div class="mobile-consistent-padding relative z-10">
             <div class="text-center mb-16" data-aos="fade-up">
-                <div class="text-electric-pink font-bold tracking-widest mb-4 uppercase">PROGRAM KEAHLIAN</div>
-                <h2 class="bebas text-5xl md:text-6xl gradient-text mb-6">Program Unggulan Kami</h2>
-                <p class="text-white/80 text-lg max-w-2xl mx-auto">Pilih jurusan yang sesuai dengan minat dan bakatmu untuk mempersiapkan karir di masa depan.</p>
+                <div class="text-pink-600 font-bold tracking-widest mb-4 uppercase">PROGRAM KEAHLIAN</div>
+                <h2 class="bebas text-5xl md:text-6xl text-cyan-600 mb-6">Program Unggulan Kami</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Pilih jurusan yang sesuai dengan minat dan bakatmu untuk mempersiapkan karir di masa depan.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 items-stretch">
@@ -460,16 +455,16 @@
                                 <div class="program-icon-fallback">
                                     @switch($jur->kode_jurusan)
                                         @case('RPL')
-                                            <i class="fas fa-laptop-code text-6xl text-neon-blue"></i>
+                                            <i class="fas fa-laptop-code text-6xl text-cyan-500"></i>
                                             @break
                                         @case('TKR')
-                                            <i class="fas fa-car text-6xl text-electric-pink"></i>
+                                            <i class="fas fa-car text-6xl text-pink-500"></i>
                                             @break
                                         @case('TMI')
-                                            <i class="fas fa-industry text-6xl text-vibrant-purple"></i>
+                                            <i class="fas fa-industry text-6xl text-purple-500"></i>
                                             @break
                                         @default
-                                            <i class="fas fa-microchip text-6xl text-neon-blue"></i>
+                                            <i class="fas fa-microchip text-6xl text-cyan-500"></i>
                                     @endswitch
                                 </div>
                             @endif
@@ -482,8 +477,8 @@
                         
                         <!-- Program Content -->
                         <div class="program-content-modern p-6">
-                            <h3 class="program-title-modern text-white text-xl font-bold mb-3">{{ $jur->nama_jurusan }}</h3>
-                            <p class="program-description-modern text-white/70 mb-6 leading-relaxed">{{ Str::limit($jur->deskripsi, 120) }}</p>
+                            <h3 class="program-title-modern text-gray-800 text-xl font-bold mb-3">{{ $jur->nama_jurusan }}</h3>
+                            <p class="program-description-modern text-gray-600 mb-6 leading-relaxed">{{ Str::limit($jur->deskripsi, 120) }}</p>
                             
                             <!-- Action Button -->
                             <a href="{{ url('jurusan/'.$jur->id) }}" class="program-link-modern group">
@@ -518,8 +513,8 @@
 
         <div class="mobile-consistent-padding relative z-10">
             <div class="text-center mb-16" data-aos="fade-up">
-                <div class="text-vibrant-purple font-bold tracking-widest mb-4 uppercase">BERITA & PENGUMUMAN</div>
-                <h2 class="bebas text-5xl md:text-6xl gradient-text mb-6">Informasi Terbaru</h2>
+                <div class="text-purple-600 font-bold tracking-widest mb-4 uppercase">BERITA & PENGUMUMAN</div>
+                <h2 class="bebas text-5xl md:text-6xl text-cyan-600 mb-6">Informasi Terbaru</h2>
             </div>
             
             <!-- Filter Buttons -->
@@ -542,7 +537,7 @@
                                 <div class="absolute inset-0 bg-gradient-to-t from-dark-bg/90 via-transparent to-transparent"></div>
                             @else
                                 <div class="news-placeholder">
-                                    <i class="fas fa-bullhorn text-4xl text-vibrant-purple"></i>
+                                    <i class="fas fa-bullhorn text-4xl text-purple-500"></i>
                                 </div>
                             @endif
                             
@@ -555,11 +550,11 @@
                         <!-- News Content -->
                         <div class="news-content-modern p-6">
                             <div class="news-date-modern mb-3">
-                                <i class="fas fa-calendar-alt mr-2 text-neon-blue"></i>
+                                <i class="fas fa-calendar-alt mr-2 text-cyan-600"></i>
                                 <span>{{ $p->tanggal_mulai->format('d M Y') }}</span>
                             </div>
-                            <h3 class="news-title-modern text-white text-lg font-bold mb-3 line-clamp-2">{{ $p->judul }}</h3>
-                            <p class="news-description-modern text-white/70 mb-4 line-clamp-3">{{ Str::limit($p->isi, 100) }}</p>
+                            <h3 class="news-title-modern text-gray-800 text-lg font-bold mb-3 line-clamp-2">{{ $p->judul }}</h3>
+                            <p class="news-description-modern text-gray-600 mb-4 line-clamp-3">{{ Str::limit($p->isi, 100) }}</p>
                             
                             <!-- Action Button -->
                             <a href="{{ url('pengumuman/'.$p->id) }}" class="news-link-modern group">
@@ -583,7 +578,7 @@
                                 <div class="absolute inset-0 bg-gradient-to-t from-dark-bg/90 via-transparent to-transparent"></div>
                             @else
                                 <div class="news-placeholder">
-                                    <i class="fas fa-newspaper text-4xl text-electric-pink"></i>
+                                    <i class="fas fa-newspaper text-4xl text-pink-500"></i>
                                 </div>
                             @endif
                             
@@ -596,11 +591,11 @@
                         <!-- News Content -->
                         <div class="news-content-modern p-6">
                             <div class="news-date-modern mb-3">
-                                <i class="fas fa-calendar-alt mr-2 text-neon-blue"></i>
+                                <i class="fas fa-calendar-alt mr-2 text-cyan-600"></i>
                                 <span>{{ $b->created_at->format('d M Y') }}</span>
                             </div>
-                            <h3 class="news-title-modern text-white text-lg font-bold mb-3 line-clamp-2">{{ $b->judul }}</h3>
-                            <p class="news-description-modern text-white/70 mb-4 line-clamp-3">{{ Str::limit($b->isi, 100) }}</p>
+                            <h3 class="news-title-modern text-gray-800 text-lg font-bold mb-3 line-clamp-2">{{ $b->judul }}</h3>
+                            <p class="news-description-modern text-gray-600 mb-4 line-clamp-3">{{ Str::limit($b->isi, 100) }}</p>
                             
                             <!-- Action Button -->
                             <a href="{{ url('berita/'.$b->id) }}" class="news-link-modern group">
@@ -655,8 +650,8 @@
 
         <div class="mobile-consistent-padding relative z-10">
             <div class="text-center mb-16" data-aos="fade-up">
-                <div class="text-neon-blue font-bold tracking-widest mb-4 uppercase">GALERI KAMI</div>
-                <h2 class="bebas text-5xl md:text-6xl gradient-text mb-6">Momen & Fasilitas</h2>
+                <div class="text-cyan-600 font-bold tracking-widest mb-4 uppercase">GALERI KAMI</div>
+                <h2 class="bebas text-5xl md:text-6xl text-cyan-600 mb-6">Momen & Fasilitas</h2>
             </div>
             
             <!-- Filter Buttons -->
@@ -679,16 +674,16 @@
                                 <img src="{{ asset_url($item->gambar) }}" alt="{{ $item->judul }}" class="gallery-image-modern">
                             @else
                                 <div class="gallery-placeholder">
-                                    <i class="fas fa-images text-4xl text-neon-blue"></i>
-                                    <span class="text-white/60 mt-2">Tidak ada foto</span>
+                                    <i class="fas fa-images text-4xl text-cyan-500"></i>
+                                    <span class="text-gray-600 mt-2">Tidak ada foto</span>
                                 </div>
                             @endif
                             
                             <!-- Overlay -->
                             <div class="gallery-overlay-modern">
                                 <div class="gallery-info-modern">
-                                    <h3 class="text-white font-bold mb-2">{{ $item->judul }}</h3>
-                                    <p class="text-white/80 text-sm mb-4">{{ Str::limit($item->deskripsi, 60) }}</p>
+                                    <h3 class="text-gray-800 font-bold mb-2">{{ $item->judul }}</h3>
+                                    <p class="text-gray-600 text-sm mb-4">{{ Str::limit($item->deskripsi, 60) }}</p>
                                     <a href="{{ route('galeri.show', $item->id) }}" class="gallery-view-btn-modern">
                                         <i class="fas fa-images mr-2"></i>Lihat Galeri
                                     </a>
@@ -700,9 +695,9 @@
                 @empty
                 <div class="col-span-4 text-center py-16">
                     <div class="glass p-8">
-                        <i class="fas fa-images text-6xl text-neon-blue mb-4"></i>
-                        <div class="text-white text-lg">Belum ada foto di galeri</div>
-                        <p class="text-white/60 mt-2">Galeri akan segera diperbarui dengan koleksi foto terbaru</p>
+                        <i class="fas fa-images text-6xl text-cyan-500 mb-4"></i>
+                        <div class="text-gray-800 text-lg">Belum ada foto di galeri</div>
+                        <p class="text-gray-600 mt-2">Galeri akan segera diperbarui dengan koleksi foto terbaru</p>
                     </div>
                 </div>
                 @endforelse
@@ -749,9 +744,9 @@
 
         <div class="mobile-consistent-padding relative z-10">
             <div class="text-center mb-16" data-aos="fade-up">
-                <div class="text-white/90 font-bold tracking-widest mb-4 uppercase">INFORMASI CEPAT</div>
-                <h2 class="bebas text-5xl md:text-6xl text-white mb-6 neon-glow">Hubungi Kami</h2>
-                <p class="text-white/90 text-lg max-w-2xl mx-auto">Dapatkan informasi lengkap tentang pendaftaran dan program keahlian kami.</p>
+                <div class="text-gray-700 font-bold tracking-widest mb-4 uppercase">INFORMASI CEPAT</div>
+                <h2 class="bebas text-5xl md:text-6xl text-cyan-600 mb-6">Hubungi Kami</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Dapatkan informasi lengkap tentang pendaftaran dan program keahlian kami.</p>
             </div>
 
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6" id="hubungi-kami-grid">
@@ -759,14 +754,14 @@
                 <div class="info-card-modern" data-aos="fade-up" data-aos-delay="100">
                     <div class="glass card-3d p-4 lg:p-6 text-center h-full flex flex-col justify-center">
                         <div class="info-icon-modern mb-3 lg:mb-4">
-                            <i class="fas fa-clock text-3xl lg:text-4xl text-yellow-400"></i>
+                            <i class="fas fa-clock text-3xl lg:text-4xl text-yellow-500"></i>
                         </div>
-                        <h4 class="text-white text-sm lg:text-lg font-bold mb-2 lg:mb-3">Jam Operasional</h4>
-                        <div class="text-white/90 space-y-1 text-xs lg:text-sm">
+                        <h4 class="text-gray-800 text-sm lg:text-lg font-bold mb-2 lg:mb-3">Jam Operasional</h4>
+                        <div class="text-gray-600 space-y-1 text-xs lg:text-sm">
                             <div class="font-semibold">Senin - Jumat:</div>
-                            <div class="text-neon-blue">07:00 - 16:00</div>
+                            <div class="text-cyan-600">07:00 - 16:00</div>
                             <div class="font-semibold mt-2">Sabtu:</div>
-                            <div class="text-neon-blue">07:00 - 12:00</div>
+                            <div class="text-cyan-600">07:00 - 12:00</div>
                         </div>
                     </div>
                 </div>
@@ -775,20 +770,20 @@
                 <div class="info-card-modern" data-aos="fade-up" data-aos-delay="200">
                     <div class="glass card-3d p-4 lg:p-6 text-center h-full flex flex-col justify-center">
                         <div class="info-icon-modern mb-3 lg:mb-4">
-                            <i class="fas fa-phone text-3xl lg:text-4xl text-green-400"></i>
+                            <i class="fas fa-phone text-3xl lg:text-4xl text-green-500"></i>
                         </div>
-                        <h4 class="text-white text-sm lg:text-lg font-bold mb-2 lg:mb-3">Kontak Kami</h4>
-                        <div class="text-white/90 space-y-1 text-xs lg:text-sm">
+                        <h4 class="text-gray-800 text-sm lg:text-lg font-bold mb-2 lg:mb-3">Kontak Kami</h4>
+                        <div class="text-gray-600 space-y-1 text-xs lg:text-sm">
                             <div class="flex items-center justify-center">
-                                <i class="fas fa-phone mr-2 text-neon-blue text-sm"></i>
+                                <i class="fas fa-phone mr-2 text-cyan-600 text-sm"></i>
                                 <span class="truncate">{{ setting('telepon_sekolah', '(0264) 123456') }}</span>
                             </div>
                             <div class="flex items-center justify-center break-all">
-                                <i class="fas fa-envelope mr-2 text-neon-blue text-sm"></i>
+                                <i class="fas fa-envelope mr-2 text-cyan-600 text-sm"></i>
                                 <span class="truncate">{{ substr(setting('email_sekolah', 'info@smkpgricikampek.sch.id'), 0, 20) }}...</span>
                             </div>
                             <div class="flex items-center justify-center">
-                                <i class="fab fa-whatsapp mr-2 text-neon-blue text-sm"></i>
+                                <i class="fab fa-whatsapp mr-2 text-cyan-600 text-sm"></i>
                                 <span class="truncate">{{ setting('whatsapp_number', '089650011916') }}</span>
                             </div>
                         </div>
@@ -799,10 +794,10 @@
                 <div class="info-card-modern" data-aos="fade-up" data-aos-delay="300">
                     <div class="glass card-3d p-4 lg:p-6 text-center h-full flex flex-col justify-center">
                         <div class="info-icon-modern mb-3 lg:mb-4">
-                            <i class="fas fa-map-marker-alt text-3xl lg:text-4xl text-red-400"></i>
+                            <i class="fas fa-map-marker-alt text-3xl lg:text-4xl text-red-500"></i>
                         </div>
-                        <h4 class="text-white text-sm lg:text-lg font-bold mb-2 lg:mb-3">Lokasi</h4>
-                        <div class="text-white/90 mb-2 lg:mb-4 text-xs lg:text-sm leading-relaxed">
+                        <h4 class="text-gray-800 text-sm lg:text-lg font-bold mb-2 lg:mb-3">Lokasi</h4>
+                        <div class="text-gray-600 mb-2 lg:mb-4 text-xs lg:text-sm leading-relaxed">
                             {{ Str::limit(setting('alamat_sekolah', 'Jl. Raya Cikampek No. 123, Cikampek, Karawang, Jawa Barat'), 60) }}
                         </div>
                         <a href="https://maps.app.goo.gl/dGWc88VSu6Pog29j7" target="_blank" class="location-link-modern text-xs lg:text-sm px-3 lg:px-4 py-1 lg:py-2">
@@ -815,11 +810,11 @@
                 <div class="info-card-modern" data-aos="fade-up" data-aos-delay="400">
                     <div class="glass card-3d p-4 lg:p-6 text-center h-full flex flex-col justify-center">
                         <div class="info-icon-modern mb-3 lg:mb-4">
-                            <i class="fas fa-user-plus text-3xl lg:text-4xl text-cyan-400"></i>
+                            <i class="fas fa-user-plus text-3xl lg:text-4xl text-cyan-500"></i>
                         </div>
-                        <h4 class="text-white text-sm lg:text-lg font-bold mb-2 lg:mb-3">Pendaftaran</h4>
-                        <div class="text-white/90 mb-2 lg:mb-4 space-y-1 text-xs lg:text-sm">
-                            <div class="font-semibold text-neon-blue">PPDB 2025/2026</div>
+                        <h4 class="text-gray-800 text-sm lg:text-lg font-bold mb-2 lg:mb-3">Pendaftaran</h4>
+                        <div class="text-gray-600 mb-2 lg:mb-4 space-y-1 text-xs lg:text-sm">
+                            <div class="font-semibold text-cyan-600">PPDB 2025/2026</div>
                             <div>Gel 1: Mar - Mei</div>
                             <div>Gel 2: Jun - Jul</div>
                         </div>
@@ -834,17 +829,6 @@
 
     <!-- Footer -->
     <footer class="footer-modern relative overflow-hidden">
-        <!-- Animated Background -->
-        <div class="absolute inset-0">
-            <div class="absolute inset-0 bg-gradient-to-br from-dark-bg via-purple-900/30 to-dark-bg"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-            <ul class="animated-bg opacity-30">
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </div>
-
         <div class="mobile-consistent-padding relative z-10">
             <!-- Main Footer Content -->
             <div class="footer-main-modern py-8" data-aos="fade-up">
@@ -895,7 +879,7 @@
             </div>
             
             <!-- Footer Bottom -->
-            <div class="footer-bottom-modern py-8 border-t border-white/10">
+            <div class="footer-bottom-modern py-8 border-t border-gray-200">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     
                     <!-- Social Media -->
@@ -953,6 +937,8 @@
        style="position: fixed; bottom: 80px; right: 8px; background: #25d366; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; z-index: 1000; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); transition: all 0.3s ease; text-decoration: none;">
         <i class="fab fa-whatsapp"></i>
     </a>
+</body>
+</html>
 
 <!-- Custom script for mobile layout fixes -->
 <script>
@@ -990,6 +976,8 @@
                 hubungiKamiGrid.style.gap = '0.75rem';
                 hubungiKamiGrid.style.width = '100%';
                 <!-- Hubungi Kami Grid Setup - Moved to external JS -->
-    
-</body>
-</html>
+            }
+        }
+        setupHubungiKamiGrid();   
+    });
+</script>
